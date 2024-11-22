@@ -1,0 +1,15 @@
+services:
+  work:
+    image: ubuntu:24.04
+    privileged: true
+    # ubuntuユーザーをsudoグループに追加
+    command: >
+      bash -c "
+        apt-get update &&
+        apt-get install -y sudo &&
+        echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/ubuntu &&
+        chmod 440 /etc/sudoers.d/ubuntu &&
+        tail -f /dev/null
+      "
+    tty: true
+    stdin_open: true
